@@ -67,6 +67,10 @@ class $AssetsImagesGen {
   AssetGenImage get programming =>
       const AssetGenImage('assets/images/programming.png');
 
+  /// File path: assets/images/single_place_holder.jpg
+  AssetGenImage get singlePlaceHolder =>
+      const AssetGenImage('assets/images/single_place_holder.jpg');
+
   /// File path: assets/images/techbot.svg
   SvgGenImage get techbot => const SvgGenImage('assets/images/techbot.svg');
 
@@ -77,6 +81,7 @@ class $AssetsImagesGen {
     logo,
     mainLogo,
     programming,
+    singlePlaceHolder,
     techbot,
   ];
 }

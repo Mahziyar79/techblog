@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 import 'package:tech_blog/constant/colors.dart';
 import 'package:tech_blog/view/splash_screen.dart';
 
@@ -19,14 +19,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return MaterialApp(
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [Locale('fa')],
+    return GetMaterialApp(
+      locale: Locale('fa'),
 
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -35,15 +29,9 @@ class MyApp extends StatelessWidget {
           style: ButtonStyle(
             textStyle: WidgetStateProperty.resolveWith((state) {
               if (state.contains(WidgetState.pressed)) {
-                return TextStyle(
-                  fontFamily: 'iranSans',
-                  fontSize: 16
-                );
+                return TextStyle(fontFamily: 'iranSans', fontSize: 16);
               }
-              return TextStyle(
-                  fontFamily: 'iranSans',
-                  fontSize: 14
-                );
+              return TextStyle(fontFamily: 'iranSans', fontSize: 14);
             }),
             backgroundColor: WidgetStateProperty.resolveWith((state) {
               if (state.contains(WidgetState.pressed)) {
@@ -54,7 +42,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16))
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
         ),
         textTheme: TextTheme(
           headlineSmall: TextStyle(fontSize: 13, color: SolidColors.blackColor),
@@ -74,16 +62,13 @@ class MyApp extends StatelessWidget {
             fontSize: 14,
             color: SolidColors.posterSubTitle,
           ),
-           labelLarge: TextStyle(
-            fontSize: 14,
-            color: SolidColors.blackColor,
-          ),
+          labelLarge: TextStyle(fontSize: 14, color: SolidColors.blackColor),
         ),
       ),
       debugShowCheckedModeBanner: false,
 
+      // home: SingleArticle(),
       home: SplashScreen(),
-      // home: Hom(),
     );
   }
 }

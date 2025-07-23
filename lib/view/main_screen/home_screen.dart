@@ -5,8 +5,10 @@ import 'package:tech_blog/components/loading.dart';
 import 'package:tech_blog/components/main_tags.dart';
 import 'package:tech_blog/constant/colors.dart';
 import 'package:tech_blog/constant/strings.dart';
+import 'package:tech_blog/controller/article/single_article_controller.dart';
 import 'package:tech_blog/controller/home_screen_controller.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
+import 'package:tech_blog/view/article_list_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final Size size;
@@ -22,6 +24,10 @@ class HomeScreen extends StatelessWidget {
 
   final HomeScreenController homeScreenController = Get.put(
     HomeScreenController(),
+  );
+
+    final SingleArticleController singleArticleController = Get.put(
+    SingleArticleController(),
   );
 
   @override
@@ -44,20 +50,25 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(height: 24),
 
                     // see more blog
-                    Padding(
-                      padding: EdgeInsets.only(right: bodyMargin),
-                      child: Row(
-                        children: [
-                          ImageIcon(
-                            Assets.icons.pencil.provider(),
-                            color: SolidColors.colorTitle,
-                          ),
-                          SizedBox(width: 8),
-                          Text(
-                            Strings.viewHotestBlog,
-                            style: textTheme.bodyMedium,
-                          ),
-                        ],
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => ArticleListScreen(title: 'همه مقالات'));
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(right: bodyMargin),
+                        child: Row(
+                          children: [
+                            ImageIcon(
+                              Assets.icons.pencil.provider(),
+                              color: SolidColors.colorTitle,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              Strings.viewHotestBlog,
+                              style: textTheme.bodyMedium,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
 
@@ -65,7 +76,6 @@ class HomeScreen extends StatelessWidget {
 
                     // blog list
                     homePageBlogList(),
-
                     SizedBox(height: 12),
                     // see more blog
                     Padding(
@@ -106,86 +116,93 @@ class HomeScreen extends StatelessWidget {
         itemCount: homeScreenController.topVisitedList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: ((context, index) {
-          return Padding(
-            padding: EdgeInsets.only(
-              right: index == 0 ? bodyMargin : 0,
-              left: 16,
-            ),
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                      width: size.width / 2.2,
-                      height: size.height / 5.3,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            homeScreenController.topVisitedList[index].image!,
-                          ),
+          return GestureDetector(
+            onTap: () {
+              singleArticleController.getArticleInfo(
+                homeScreenController.topVisitedList[index].id!,
+              );
+            },
+            child: Padding(
+              padding: EdgeInsets.only(
+                right: index == 0 ? bodyMargin : 0,
+                left: 16,
+              ),
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        width: size.width / 2.2,
+                        height: size.height / 5.3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              homeScreenController.topVisitedList[index].image!,
+                            ),
 
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      foregroundDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        gradient: LinearGradient(
-                          colors: GradientColors.blogPost,
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 10,
-                      right: 0,
-                      left: 0,
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                homeScreenController
-                                    .topVisitedList[index]
-                                    .author!,
-                                style: textTheme.labelSmall,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    homeScreenController
-                                        .topVisitedList[index]
-                                        .view!,
-                                    style: textTheme.labelSmall,
-                                  ),
-                                  SizedBox(width: 4),
-                                  Icon(
-                                    Icons.remove_red_eye_sharp,
-                                    color: Colors.white,
-                                    size: 14,
-                                  ),
-                                ],
-                              ),
-                            ],
+                            fit: BoxFit.cover,
                           ),
-                        ],
+                        ),
+                        foregroundDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          gradient: LinearGradient(
+                            colors: GradientColors.blogPost,
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 6),
-                SizedBox(
-                  width: size.width / 2.2,
-                  child: Text(
-                    homeScreenController.topVisitedList[index].title!,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: textTheme.headlineSmall,
+                      Positioned(
+                        bottom: 10,
+                        right: 0,
+                        left: 0,
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  homeScreenController
+                                      .topVisitedList[index]
+                                      .author!,
+                                  style: textTheme.labelSmall,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      homeScreenController
+                                          .topVisitedList[index]
+                                          .view!,
+                                      style: textTheme.labelSmall,
+                                    ),
+                                    SizedBox(width: 4),
+                                    Icon(
+                                      Icons.remove_red_eye_sharp,
+                                      color: Colors.white,
+                                      size: 14,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                  SizedBox(height: 6),
+                  SizedBox(
+                    width: size.width / 2.2,
+                    child: Text(
+                      homeScreenController.topVisitedList[index].title!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: textTheme.headlineSmall,
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         }),

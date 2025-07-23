@@ -6,8 +6,8 @@ import 'package:tech_blog/components/divider.dart';
 import 'package:tech_blog/constant/colors.dart';
 import 'package:tech_blog/constant/strings.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
-import 'package:tech_blog/view/home_screen.dart';
-import 'package:tech_blog/view/profile_screen.dart';
+import 'package:tech_blog/view/main_screen/home_screen.dart';
+import 'package:tech_blog/view/main_screen/profile_screen.dart';
 import 'package:tech_blog/view/register_intro.dart';
 
 final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();

@@ -5,10 +5,11 @@ import 'package:tech_blog/components/loading.dart';
 import 'package:tech_blog/components/main_tags.dart';
 import 'package:tech_blog/constant/colors.dart';
 import 'package:tech_blog/constant/strings.dart';
+import 'package:tech_blog/controller/article/article_list_screen_controller.dart';
 import 'package:tech_blog/controller/article/single_article_controller.dart';
 import 'package:tech_blog/controller/home_screen_controller.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
-import 'package:tech_blog/view/article_list_screen.dart';
+import 'package:tech_blog/view/article/article_list_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final Size size;
@@ -26,8 +27,12 @@ class HomeScreen extends StatelessWidget {
     HomeScreenController(),
   );
 
-    final SingleArticleController singleArticleController = Get.put(
+  final SingleArticleController singleArticleController = Get.put(
     SingleArticleController(),
+  );
+
+  final ArticleListScreenController articleListScreenController = Get.put(
+    ArticleListScreenController(),
   );
 
   @override
@@ -103,7 +108,7 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(height: 60),
                   ],
                 )
-              : loading(),
+              : Loading(),
         ),
       ),
     );
@@ -252,39 +257,46 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget homePagePoster() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-      child: Stack(
-        children: [
-          Container(
-            width: size.width,
-            height: size.height / 4,
-            foregroundDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              gradient: LinearGradient(
-                colors: GradientColors.homePosterCoverGradiant,
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+    return GestureDetector(
+      onTap: () {
+        singleArticleController.getArticleInfo(
+          homeScreenController.poster.value.id!,
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+        child: Stack(
+          children: [
+            Container(
+              width: size.width,
+              height: size.height / 4,
+              foregroundDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                gradient: LinearGradient(
+                  colors: GradientColors.homePosterCoverGradiant,
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+              child: CustomImage(
+                imageUrl: homeScreenController.poster.value.image!,
               ),
             ),
-            child: CustomImage(
-              imageUrl: homeScreenController.poster.value.image!,
+            Positioned(
+              bottom: 16,
+              right: 8,
+              left: 0,
+              child: Column(
+                children: [
+                  Text(
+                    homeScreenController.poster.value.title!,
+                    style: textTheme.headlineLarge,
+                  ),
+                ],
+              ),
             ),
-          ),
-          Positioned(
-            bottom: 16,
-            right: 8,
-            left: 0,
-            child: Column(
-              children: [
-                Text(
-                  homeScreenController.poster.value.title!,
-                  style: textTheme.headlineLarge,
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -296,11 +308,24 @@ class HomeScreen extends StatelessWidget {
         itemCount: homeScreenController.tagsList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: ((context, index) {
-          return Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, index == 0 ? bodyMargin : 4, 8),
-            child: MainTags(
-              index: index,
-              title: homeScreenController.tagsList[index].title!,
+          return GestureDetector(
+            onTap: () async {
+              var tagId = homeScreenController.tagsList[index].id!;
+              var catname = homeScreenController.tagsList[index].title!;
+              await articleListScreenController.getArticleListWithCatId(tagId);
+              Get.to(() => ArticleListScreen(title: catname));
+            },
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(
+                8,
+                8,
+                index == 0 ? bodyMargin : 4,
+                8,
+              ),
+              child: MainTags(
+                index: index,
+                title: homeScreenController.tagsList[index].title!,
+              ),
             ),
           );
         }),

@@ -53,4 +53,20 @@ class ArticleListScreenController extends GetxController {
       loading.value = false;
     }
   }
+
+    getArticleListWithCatId(String id) async {
+    articleList.clear();
+    loading.value = true;
+
+    var response = await DioService().getMethod(
+      '${ApiUrlConstant.baseUrl}article/get.php?command=get_articles_with_cat_id&cat_id=$id&user_id=',
+    );
+
+    if (response.statusCode == 200) {
+      response.data.forEach((element) {
+        articleList.add(ArticleModel.fromJson(element));
+      });
+      loading.value = false;
+    }
+  }
 }

@@ -5,15 +5,14 @@ import 'package:tech_blog/components/custom_launch_url.dart';
 import 'package:tech_blog/components/divider.dart';
 import 'package:tech_blog/constant/colors.dart';
 import 'package:tech_blog/constant/strings.dart';
+import 'package:tech_blog/controller/register/register_controller.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
 import 'package:tech_blog/view/main_screen/home_screen.dart';
 import 'package:tech_blog/view/main_screen/profile_screen.dart';
-import 'package:tech_blog/view/register_intro.dart';
-
-final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
 class MainScreen extends StatelessWidget {
   final RxInt selectedPageIndex = 0.obs;
+  final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
 
   MainScreen({super.key});
 
@@ -26,7 +25,6 @@ class MainScreen extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     double bodyMargin = size.width / 10;
     var textTheme = Theme.of(context).textTheme;
-
     return SafeArea(
       child: Scaffold(
         key: _drawerKey,
@@ -112,7 +110,6 @@ class MainScreen extends StatelessWidget {
                       textTheme: textTheme,
                       bodyMargin: bodyMargin,
                     ),
-                    RegisterIntro(),
                     ProfileScreen(),
                   ],
                 ),
@@ -131,7 +128,7 @@ class MainScreen extends StatelessWidget {
 }
 
 class BottomNavigation extends StatelessWidget {
-  const BottomNavigation({
+  BottomNavigation({
     super.key,
     required this.size,
     required this.bodyMargin,
@@ -141,6 +138,8 @@ class BottomNavigation extends StatelessWidget {
   final Size size;
   final double bodyMargin;
   final Function(int) changeScreen;
+
+  final RegisterController _registerController = RegisterController();
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +182,7 @@ class BottomNavigation extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    changeScreen(1);
+                    _registerController.toggleLogin();
                   },
                   icon: ImageIcon(
                     size: 20,
@@ -193,7 +192,7 @@ class BottomNavigation extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    changeScreen(2);
+                    changeScreen(1);
                   },
                   icon: ImageIcon(
                     size: 20,

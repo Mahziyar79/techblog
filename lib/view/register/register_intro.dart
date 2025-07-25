@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:tech_blog/constant/colors.dart';
 import 'package:tech_blog/constant/strings.dart';
+import 'package:tech_blog/controller/register/register_controller.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
-import 'package:tech_blog/view/my_cats.dart';
+// import 'package:tech_blog/view/my_cats.dart';
 import 'package:validators/validators.dart';
 
 class RegisterIntro extends StatelessWidget {
-  const RegisterIntro({super.key});
+  RegisterIntro({super.key});
+
+  final RegisterController registerController = Get.put(RegisterController());
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +58,6 @@ class RegisterIntro extends StatelessWidget {
     Size size,
     TextTheme textTheme,
   ) {
-    final TextEditingController emailController = TextEditingController();
     String? errorText;
 
     return showModalBottomSheet(
@@ -85,7 +88,8 @@ class RegisterIntro extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(24),
                       child: TextField(
-                        controller: emailController,
+                        controller:
+                            registerController.emailTextEditingController,
                         style: textTheme.headlineSmall,
                         textAlign: TextAlign.left,
                         decoration: InputDecoration(
@@ -96,8 +100,12 @@ class RegisterIntro extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        String email = emailController.text.trim();
+                        String email = registerController
+                            .emailTextEditingController
+                            .text
+                            .trim();
                         if (isEmail(email)) {
+                          registerController.register();
                           Navigator.pop(context);
                           _showActivateBottomSheet(context, size, textTheme);
                         } else {
@@ -152,7 +160,8 @@ class RegisterIntro extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(24),
                   child: TextField(
-                    onChanged: (value) {},
+                    controller:
+                        registerController.activeCodeTextEditingController,
                     style: textTheme.headlineSmall,
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(hintText: '******'),
@@ -160,9 +169,10 @@ class RegisterIntro extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => MyCats()),
-                    );
+                    registerController.verify();
+                    // Navigator.of(context).pushReplacement(
+                    //   MaterialPageRoute(builder: (context) => MyCats()),
+                    // );
                   },
 
                   child: Text(

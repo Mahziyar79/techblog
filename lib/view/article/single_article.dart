@@ -9,7 +9,7 @@ import 'package:tech_blog/constant/strings.dart';
 import 'package:tech_blog/controller/article/article_list_screen_controller.dart';
 import 'package:tech_blog/controller/article/single_article_controller.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
-import 'package:tech_blog/view/article_list_screen.dart';
+import 'package:tech_blog/view/article/article_list_screen.dart';
 
 class SingleArticle extends StatelessWidget {
   SingleArticle({super.key});
@@ -26,7 +26,7 @@ class SingleArticle extends StatelessWidget {
         body: SingleChildScrollView(
           child: Obx(
             () => singleArticleController.loading.value
-                ? SizedBox(height: size.height, child: loading())
+                ? SizedBox(height: size.height, child: Loading())
                 : Column(
                     children: [
                       Stack(
@@ -148,7 +148,7 @@ class SingleArticle extends StatelessWidget {
                                 ),
                                 onLoadingBuilder:
                                     (context, element, loadingProgress) =>
-                                        loading(),
+                                        Loading(),
                               ),
                               SizedBox(height: 24),
                               tags(),

@@ -95,7 +95,7 @@ class ArticleListScreen extends StatelessWidget {
                     );
                   }),
                 )
-              : loading(),
+              : Loading(),
         ),
       ),
     );

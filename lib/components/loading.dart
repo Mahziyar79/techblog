@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tech_blog/constant/colors.dart';
 
-class loading extends StatelessWidget {
-  const loading({
+class Loading extends StatelessWidget {
+  const Loading({
     super.key,
   });
 

@@ -4,7 +4,7 @@ import 'package:tech_blog/models/article_info_model.dart';
 import 'package:tech_blog/models/article_model.dart';
 import 'package:tech_blog/models/tags_model.dart';
 import 'package:tech_blog/services/dio_service.dart';
-import 'package:tech_blog/view/single_article.dart';
+import 'package:tech_blog/view/article/single_article.dart';
 
 class SingleArticleController extends GetxController {
   RxBool loading = false.obs;
@@ -24,7 +24,7 @@ class SingleArticleController extends GetxController {
     tagList.clear();
     relatedList.clear();
 
-    var userId;
+    String userId = '';
     var response = await DioService().getMethod(
       '${ApiUrlConstant.baseUrl}article/get.php?command=info&id=$id&user_id=$userId',
     );

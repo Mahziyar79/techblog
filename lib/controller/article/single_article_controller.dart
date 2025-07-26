@@ -4,7 +4,6 @@ import 'package:tech_blog/models/article_info_model.dart';
 import 'package:tech_blog/models/article_model.dart';
 import 'package:tech_blog/models/tags_model.dart';
 import 'package:tech_blog/services/dio_service.dart';
-import 'package:tech_blog/view/article/single_article.dart';
 
 class SingleArticleController extends GetxController {
   RxBool loading = false.obs;
@@ -46,7 +45,5 @@ class SingleArticleController extends GetxController {
     }
 
     loading.value = false;
-
-    Get.to(() => SingleArticle());
   }
 }

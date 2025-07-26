@@ -1,6 +1,7 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:tech_blog/components/post_bottom_sheet.dart';
 import 'package:tech_blog/constant/api_constant.dart';
 import 'package:tech_blog/constant/storage_const.dart';
 import 'package:tech_blog/services/dio_service.dart';
@@ -48,7 +49,7 @@ class RegisterController extends RxController {
         await box.write(StorageKey.token, response.data['token']);
         await box.write(StorageKey.userId, response.data['user_id']);
 
-        Get.to(() => MainScreen());
+        Get.offAll(() => MainScreen());
         break;
       case 'incorrect_code':
         Get.snackbar('خطا', 'کد فعالسازی غلط است');
@@ -62,6 +63,8 @@ class RegisterController extends RxController {
   toggleLogin() {
     if (GetStorage().read(StorageKey.token) == null) {
       Get.to(() => RegisterIntro());
+    } else {
+      Get.bottomSheet(const PostBottomSheet());
     }
   }
 }

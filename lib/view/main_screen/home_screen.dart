@@ -9,6 +9,7 @@ import 'package:tech_blog/controller/article/article_list_screen_controller.dart
 import 'package:tech_blog/controller/article/single_article_controller.dart';
 import 'package:tech_blog/controller/home_screen_controller.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
+import 'package:tech_blog/route_manager/names.dart';
 import 'package:tech_blog/view/article/article_list_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,17 +24,9 @@ class HomeScreen extends StatelessWidget {
     required this.bodyMargin,
   });
 
-  final HomeScreenController homeScreenController = Get.put(
-    HomeScreenController(),
-  );
-
-  final SingleArticleController singleArticleController = Get.put(
-    SingleArticleController(),
-  );
-
-  final ArticleListScreenController articleListScreenController = Get.put(
-    ArticleListScreenController(),
-  );
+  final homeScreenController = Get.find<HomeScreenController>();
+  final singleArticleController = Get.find<SingleArticleController>();
+  final articleListScreenController = Get.find<ArticleListScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +119,7 @@ class HomeScreen extends StatelessWidget {
               singleArticleController.getArticleInfo(
                 homeScreenController.topVisitedList[index].id!,
               );
+              Get.toNamed(NamedRoute.routeSingleArticle);
             },
             child: Padding(
               padding: EdgeInsets.only(

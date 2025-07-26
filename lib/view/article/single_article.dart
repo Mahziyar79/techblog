@@ -13,9 +13,8 @@ import 'package:tech_blog/view/article/article_list_screen.dart';
 
 class SingleArticle extends StatelessWidget {
   SingleArticle({super.key});
-  final SingleArticleController singleArticleController = Get.put(
-    SingleArticleController(),
-  );
+  final singleArticleController = Get.find<SingleArticleController>();
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;

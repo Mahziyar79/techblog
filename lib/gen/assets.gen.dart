@@ -31,16 +31,25 @@ class $AssetsIconsGen {
   /// File path: assets/icons/pencil.png
   AssetGenImage get pencil => const AssetGenImage('assets/icons/pencil.png');
 
+  /// File path: assets/icons/post_blog.svg
+  SvgGenImage get postBlog => const SvgGenImage('assets/icons/post_blog.svg');
+
+  /// File path: assets/icons/post_podcast.svg
+  SvgGenImage get postPodcast =>
+      const SvgGenImage('assets/icons/post_podcast.svg');
+
   /// File path: assets/icons/user.png
   AssetGenImage get user => const AssetGenImage('assets/icons/user.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [
+  List<dynamic> get values => [
     avatar,
     home,
     microphone,
     newPost,
     pencil,
+    postBlog,
+    postPodcast,
     user,
   ];
 }

@@ -139,7 +139,7 @@ class BottomNavigation extends StatelessWidget {
   final double bodyMargin;
   final Function(int) changeScreen;
 
-  final RegisterController _registerController = RegisterController();
+  final _registerController = Get.find<RegisterController>();
 
   @override
   Widget build(BuildContext context) {

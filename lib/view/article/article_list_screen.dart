@@ -6,17 +6,17 @@ import 'package:tech_blog/components/loading.dart';
 import 'package:tech_blog/constant/colors.dart';
 import 'package:tech_blog/controller/article/article_list_screen_controller.dart';
 import 'package:tech_blog/controller/article/single_article_controller.dart';
+import 'package:tech_blog/route_manager/names.dart';
 
 class ArticleListScreen extends StatelessWidget {
   final String? title;
   ArticleListScreen({super.key, required this.title});
+
   final ArticleListScreenController articleListScreenController = Get.put(
     ArticleListScreenController(),
   );
 
-  final SingleArticleController singleArticleController = Get.put(
-    SingleArticleController(),
-  );
+  final singleArticleController = Get.find<SingleArticleController>();
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
@@ -35,6 +35,7 @@ class ArticleListScreen extends StatelessWidget {
                         singleArticleController.getArticleInfo(
                           articleListScreenController.articleList[index].id!,
                         );
+                        Get.toNamed(NamedRoute.routeSingleArticle);
                       },
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),

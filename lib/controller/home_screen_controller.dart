@@ -33,7 +33,7 @@ class HomeScreenController extends GetxController {
           .map((item) => PodcastModel.fromJson(item))
           .toList();
 
-       tagsList.value = (response.data['tags'] as List)
+      tagsList.value = (response.data['tags'] as List)
           .map((item) => TagsModel.fromJson(item))
           .toList();
 

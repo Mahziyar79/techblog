@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:tech_blog/controller/article/article_list_screen_controller.dart';
+import 'package:tech_blog/controller/article/manage_article_controller.dart';
 import 'package:tech_blog/controller/article/single_article_controller.dart';
 import 'package:tech_blog/controller/home_screen_controller.dart';
 import 'package:tech_blog/controller/register/register_controller.dart';
@@ -23,13 +24,12 @@ class HomeBinding implements Bindings {
   }
 }
 
-// class ArticleManagerBinding implements Bindings {
-//   @override
-//   void dependencies() {
-//     // Get.put(ManageArticleController());
-//     Get.put(ManageArticleController());
-//   }
-// }
+class ArticleManagerBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => ManageArticleController());
+  }
+}
 
 
 // class SinglePodcastBinding implements Bindings {

@@ -7,7 +7,9 @@ import 'package:tech_blog/constant/colors.dart';
 import 'package:tech_blog/my_http_overrides.dart';
 import 'package:tech_blog/route_manager/binding.dart';
 import 'package:tech_blog/route_manager/names.dart';
+import 'package:tech_blog/view/article/manage_article.dart';
 import 'package:tech_blog/view/article/single_article.dart';
+import 'package:tech_blog/view/article/single_manage_article.dart';
 import 'package:tech_blog/view/main_screen/main_screen.dart';
 import 'package:tech_blog/view/splash_screen.dart';
 import 'package:get_storage/get_storage.dart';
@@ -45,8 +47,17 @@ class MyApp extends StatelessWidget {
           page: () => SingleArticle(),
           binding: ArticleBinding(),
         ),
+         GetPage(
+          name: NamedRoute.manageArticle,
+          page: () => ManageArticle(),
+          binding: ArticleManagerBinding(),
+        ),
+        GetPage(
+          name: NamedRoute.singleManageArticle,
+          page: () => SingleManageArticle(),
+          binding: ArticleManagerBinding(),
+        ),
       ],
-      // home: SingleArticle(),
       home: SplashScreen(),
     );
   }

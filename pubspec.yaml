@@ -45,6 +45,7 @@ dependencies:
   cached_network_image: ^3.4.1
   flutter_widget_from_html: ^0.17.0
   get_storage: ^2.1.1
+  file_picker: ^10.2.0
 
 dev_dependencies:
   flutter_test:

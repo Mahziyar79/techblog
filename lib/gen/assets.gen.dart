@@ -83,6 +83,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/techbot.svg
   SvgGenImage get techbot => const SvgGenImage('assets/images/techbot.svg');
 
+  /// File path: assets/images/techbot_sad.svg
+  SvgGenImage get techbotSad =>
+      const SvgGenImage('assets/images/techbot_sad.svg');
+
   /// List of all assets
   List<dynamic> get values => [
     arrowDown,
@@ -92,6 +96,7 @@ class $AssetsImagesGen {
     programming,
     singlePlaceHolder,
     techbot,
+    techbotSad,
   ];
 }
 

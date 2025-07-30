@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tech_blog/components/custom_image.dart';
 import 'package:tech_blog/components/loading.dart';
 import 'package:tech_blog/components/main_tags.dart';
+import 'package:tech_blog/components/see_more.dart';
 import 'package:tech_blog/constant/colors.dart';
 import 'package:tech_blog/constant/strings.dart';
 import 'package:tech_blog/controller/article/article_list_screen_controller.dart';
@@ -27,7 +28,6 @@ class HomeScreen extends StatelessWidget {
   final homeScreenController = Get.find<HomeScreenController>();
   final singleArticleController = Get.find<SingleArticleController>();
   final articleListScreenController = Get.find<ArticleListScreenController>();
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -52,21 +52,9 @@ class HomeScreen extends StatelessWidget {
                       onTap: () {
                         Get.to(() => ArticleListScreen(title: 'همه مقالات'));
                       },
-                      child: Padding(
-                        padding: EdgeInsets.only(right: bodyMargin),
-                        child: Row(
-                          children: [
-                            ImageIcon(
-                              Assets.icons.pencil.provider(),
-                              color: SolidColors.colorTitle,
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              Strings.viewHotestBlog,
-                              style: textTheme.bodyMedium,
-                            ),
-                          ],
-                        ),
+                      child: SeeMore(
+                        bodyMargin: bodyMargin,
+                        title: Strings.viewHotestBlog,
                       ),
                     ),
 

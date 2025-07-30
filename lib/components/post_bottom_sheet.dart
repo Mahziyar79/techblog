@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tech_blog/constant/strings.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
+import 'package:tech_blog/route_manager/names.dart';
 
 class PostBottomSheet extends StatelessWidget {
   const PostBottomSheet({super.key});
@@ -38,15 +39,20 @@ class PostBottomSheet extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(Assets.icons.postBlog.path, height: 30),
-                    SizedBox(width: 8),
-                    Text(
-                      Strings.titleAppBarManageArticle,
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(NamedRoute.manageArticle);
+                  },
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(Assets.icons.postBlog.path, height: 30),
+                      SizedBox(width: 8),
+                      Text(
+                        Strings.titleAppBarManageArticle,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   children: [

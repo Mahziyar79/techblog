@@ -3,6 +3,7 @@ import 'package:tech_blog/controller/article/article_list_screen_controller.dart
 import 'package:tech_blog/controller/article/manage_article_controller.dart';
 import 'package:tech_blog/controller/article/single_article_controller.dart';
 import 'package:tech_blog/controller/home_screen_controller.dart';
+import 'package:tech_blog/controller/podcast/podcast_list_screen_controller.dart';
 import 'package:tech_blog/controller/register/register_controller.dart';
 
 
@@ -31,6 +32,13 @@ class ArticleManagerBinding implements Bindings {
   }
 }
 
+
+class PodcastListBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.put(PodcastListScreenController());
+  }
+}
 
 // class SinglePodcastBinding implements Bindings {
 //   @override

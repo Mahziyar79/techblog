@@ -12,6 +12,7 @@ import 'package:tech_blog/controller/home_screen_controller.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
 import 'package:tech_blog/route_manager/names.dart';
 import 'package:tech_blog/view/article/article_list_screen.dart';
+import 'package:tech_blog/view/podcast/podcast_list_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final Size size;
@@ -64,20 +65,25 @@ class HomeScreen extends StatelessWidget {
                     homePageBlogList(),
                     SizedBox(height: 12),
                     // see more blog
-                    Padding(
-                      padding: EdgeInsets.only(right: bodyMargin),
-                      child: Row(
-                        children: [
-                          ImageIcon(
-                            Assets.icons.microphone.provider(),
-                            color: SolidColors.colorTitle,
-                          ),
-                          SizedBox(width: 8),
-                          Text(
-                            Strings.viewHotestPodCasts,
-                            style: textTheme.bodyMedium,
-                          ),
-                        ],
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => PodcastListScreen(title: 'همه پادکست ها'));
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(right: bodyMargin),
+                        child: Row(
+                          children: [
+                            ImageIcon(
+                              Assets.icons.microphone.provider(),
+                              color: SolidColors.colorTitle,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              Strings.viewHotestPodCasts,
+                              style: textTheme.bodyMedium,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tech_blog/components/post_bottom_sheet.dart';
-import 'package:tech_blog/constant/api_constant.dart';
+import 'package:tech_blog/constant/api_url_constant.dart';
 import 'package:tech_blog/constant/storage_const.dart';
 import 'package:tech_blog/services/dio_service.dart';
 import 'package:tech_blog/view/main_screen/main_screen.dart';

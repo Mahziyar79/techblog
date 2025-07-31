@@ -1,5 +1,5 @@
 
-import 'package:tech_blog/constant/api_constant.dart';
+import 'package:tech_blog/constant/api_url_constant.dart';
 
 class PosterModel {
   String? id;

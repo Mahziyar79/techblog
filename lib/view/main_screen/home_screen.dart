@@ -95,7 +95,7 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(height: 60),
                   ],
                 )
-              : Loading(),
+              : SizedBox(height: Get.height / 2,child: Center(child: Loading())),
         ),
       ),
     );

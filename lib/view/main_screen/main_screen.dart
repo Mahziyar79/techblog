@@ -4,6 +4,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:tech_blog/components/custom_launch_url.dart';
 import 'package:tech_blog/components/divider.dart';
 import 'package:tech_blog/constant/colors.dart';
+import 'package:tech_blog/constant/dimens.dart';
 import 'package:tech_blog/constant/strings.dart';
 import 'package:tech_blog/controller/register/register_controller.dart';
 import 'package:tech_blog/gen/assets.gen.dart';
@@ -115,11 +116,7 @@ class MainScreen extends StatelessWidget {
                 ),
               ),
             ),
-            BottomNavigation(
-              size: size,
-              bodyMargin: bodyMargin,
-              changeScreen: changeScreen,
-            ),
+            BottomNavigation(changeScreen: changeScreen),
           ],
         ),
       ),
@@ -128,15 +125,8 @@ class MainScreen extends StatelessWidget {
 }
 
 class BottomNavigation extends StatelessWidget {
-  BottomNavigation({
-    super.key,
-    required this.size,
-    required this.bodyMargin,
-    required this.changeScreen,
-  });
+  BottomNavigation({super.key, required this.changeScreen});
 
-  final Size size;
-  final double bodyMargin;
   final Function(int) changeScreen;
 
   final _registerController = Get.find<RegisterController>();
@@ -144,11 +134,11 @@ class BottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 0,
-      right: 0,
-      left: 0,
+      bottom: 8,
+      right: Dimens.bodyMargin,
+      left: Dimens.bodyMargin,
       child: Container(
-        height: size.height / 11,
+        height: Get.height / 11,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: GradientColors.bottomNavBackground,
@@ -156,52 +146,45 @@ class BottomNavigation extends StatelessWidget {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            right: bodyMargin,
-            left: bodyMargin,
-            bottom: 8,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(18)),
+            gradient: LinearGradient(colors: GradientColors.bottomNav),
           ),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(18)),
-              gradient: LinearGradient(colors: GradientColors.bottomNav),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    changeScreen(0);
-                  },
-                  icon: ImageIcon(
-                    size: 20,
-                    Assets.icons.home.provider(),
-                    color: SolidColors.lightIcon,
-                  ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                onPressed: () {
+                  changeScreen(0);
+                },
+                icon: ImageIcon(
+                  size: 20,
+                  Assets.icons.home.provider(),
+                  color: SolidColors.lightIcon,
                 ),
-                IconButton(
-                  onPressed: () {
-                    _registerController.toggleLogin();
-                  },
-                  icon: ImageIcon(
-                    size: 20,
-                    Assets.icons.newPost.provider(),
-                    color: SolidColors.lightIcon,
-                  ),
+              ),
+              IconButton(
+                onPressed: () {
+                  _registerController.toggleLogin();
+                },
+                icon: ImageIcon(
+                  size: 20,
+                  Assets.icons.newPost.provider(),
+                  color: SolidColors.lightIcon,
                 ),
-                IconButton(
-                  onPressed: () {
-                    changeScreen(1);
-                  },
-                  icon: ImageIcon(
-                    size: 20,
-                    Assets.icons.user.provider(),
-                    color: SolidColors.lightIcon,
-                  ),
+              ),
+              IconButton(
+                onPressed: () {
+                  changeScreen(1);
+                },
+                icon: ImageIcon(
+                  size: 20,
+                  Assets.icons.user.provider(),
+                  color: SolidColors.lightIcon,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -95,7 +95,10 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(height: 60),
                   ],
                 )
-              : SizedBox(height: Get.height / 2,child: Center(child: Loading())),
+              : SizedBox(
+                  height: Get.height / 2,
+                  child: Center(child: Loading()),
+                ),
         ),
       ),
     );
@@ -210,33 +213,41 @@ class HomeScreen extends StatelessWidget {
         itemCount: homeScreenController.topPodcasts.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: ((context, index) {
-          return Padding(
-            padding: EdgeInsets.only(
-              right: index == 0 ? bodyMargin : 0,
-              left: 16,
-            ),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: size.width / 2.2,
-                  height: size.height / 4.8,
-                  child: CustomImage(
-                    imageUrl: homeScreenController.topPodcasts[index].poster!,
-                  ),
-                ),
-                SizedBox(height: 6),
-                SizedBox(
-                  width: size.width / 2.2,
-                  child: Center(
-                    child: Text(
-                      homeScreenController.topPodcasts[index].title!,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: textTheme.headlineSmall,
+          return GestureDetector(
+            onTap: () {
+              Get.toNamed(
+                NamedRoute.singlePodcast,
+                arguments: homeScreenController.topPodcasts[index],
+              );
+            },
+            child: Padding(
+              padding: EdgeInsets.only(
+                right: index == 0 ? bodyMargin : 0,
+                left: 16,
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: size.width / 2.2,
+                    height: size.height / 4.8,
+                    child: CustomImage(
+                      imageUrl: homeScreenController.topPodcasts[index].poster!,
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(height: 6),
+                  SizedBox(
+                    width: size.width / 2.2,
+                    child: Center(
+                      child: Text(
+                        homeScreenController.topPodcasts[index].title!,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: textTheme.headlineSmall,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         }),

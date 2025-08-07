@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:tech_blog/constant/api_url_constant.dart';
@@ -10,6 +11,7 @@ class SinglePodcastController extends GetxController {
 
   RxBool loading = false.obs;
   RxBool playState = false.obs;
+  RxBool isLoopAll = false.obs;
   RxInt currentFileIndex = 0.obs;
   RxList<PodcastsFileModel> podcastsFileModel = RxList();
   final player = AudioPlayer();
@@ -50,6 +52,53 @@ class SinglePodcastController extends GetxController {
       }
 
       loading.value = false;
+    }
+  }
+
+  Rx<Duration> progressValue = Duration(seconds: 0).obs;
+  Rx<Duration> bufferedValue = Duration(seconds: 0).obs;
+
+  Timer? timer;
+
+  startProgress() {
+    const tick = Duration(seconds: 1);
+    int duration = player.duration!.inSeconds - player.position.inSeconds;
+
+    if (timer != null && timer!.isActive) {
+      timer!.cancel();
+      timer = null;
+    }
+
+    timer = Timer.periodic(tick, (timer) {
+      duration--;
+      progressValue.value = player.position;
+      bufferedValue.value = player.bufferedPosition;
+
+      if (duration <= 0) {
+        timer.cancel();
+        progressValue.value = Duration(seconds: 0);
+        bufferedValue.value = Duration(seconds: 0);
+      }
+    });
+  }
+
+  timerCheck() {
+    if (player.playing) {
+      startProgress();
+    } else {
+      timer!.cancel();
+      progressValue.value = Duration(seconds: 0);
+      bufferedValue.value = Duration(seconds: 0);
+    }
+  }
+
+  setLoopMode() {
+    if (isLoopAll.value) {
+      isLoopAll.value = false;
+      player.setLoopMode(LoopMode.off);
+    } else {
+      isLoopAll.value = true;
+      player.setLoopMode(LoopMode.all);
     }
   }
 }

@@ -1,8 +1,8 @@
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:percent_indicator/flutter_percent_indicator.dart';
 import 'package:tech_blog/constant/colors.dart';
 import 'package:tech_blog/constant/dimens.dart';
 import 'package:tech_blog/controller/podcast/single_podcast_controller.dart';
@@ -12,7 +12,7 @@ import 'package:tech_blog/models/podcast/podcast_model.dart';
 class SinglePodcast extends StatelessWidget {
   late final SinglePodcastController controller;
   late final PodcastModel podcastModel;
-  SinglePodcast() {
+  SinglePodcast({super.key}) {
     podcastModel = Get.arguments;
     controller = Get.put(SinglePodcastController(id: podcastModel.id));
   }
@@ -144,6 +144,7 @@ class SinglePodcast extends StatelessWidget {
                                 );
                                 controller.currentFileIndex.value =
                                     controller.player.currentIndex!;
+                                controller.timerCheck();
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
@@ -199,7 +200,7 @@ class SinglePodcast extends StatelessWidget {
               right: Dimens.bodyMargin,
               left: Dimens.bodyMargin,
               child: Container(
-                height: Get.height / 7,
+                height: Get.height / 6.5,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: GradientColors.bottomNavBackground,
@@ -219,11 +220,36 @@ class SinglePodcast extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           SizedBox(
-                            width: Get.width - (Dimens.bodyMargin * 2),
-                            child: LinearPercentIndicator(
-                              percent: 1,
-                              backgroundColor: Colors.white,
-                              progressColor: Colors.orange,
+                            width: Get.width / 1.5,
+                            child: Obx(
+                              () => ProgressBar(
+                                timeLabelTextStyle: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                thumbColor: Colors.orange,
+                                progressBarColor: Colors.orange,
+                                baseBarColor: Colors.white,
+                                buffered: controller.bufferedValue.value,
+                                progress: controller.progressValue.value,
+                                total:
+                                    controller.player.duration ??
+                                    Duration(seconds: 0),
+                                onSeek: (position) async {
+                                  controller.player.seek(position);
+                                  controller.player.playing
+                                      ? controller.startProgress()
+                                      : controller.timer!.cancel();
+
+                                  if (controller.player.playing) {
+                                    controller.startProgress();
+                                  } else if (position <= Duration(seconds: 0)) {
+                                    await controller.player.seekToNext();
+                                    controller.currentFileIndex.value =
+                                        controller.player.currentIndex!;
+                                    controller.timerCheck();
+                                  }
+                                },
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -236,6 +262,7 @@ class SinglePodcast extends StatelessWidget {
                                     await controller.player.seekToNext();
                                     controller.currentFileIndex.value =
                                         controller.player.currentIndex!;
+                                    controller.timerCheck();
                                   },
                                   child: Icon(
                                     Icons.skip_next,
@@ -244,6 +271,12 @@ class SinglePodcast extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                   onTap: () {
+                                    if (controller.player.playing) {
+                                      controller.timer!.cancel();
+                                    } else {
+                                      controller.startProgress();
+                                    }
+
                                     if (controller.player.playing) {
                                       controller.player.pause();
                                     } else {
@@ -270,6 +303,7 @@ class SinglePodcast extends StatelessWidget {
                                     await controller.player.seekToPrevious();
                                     controller.currentFileIndex.value =
                                         controller.player.currentIndex!;
+                                    controller.timerCheck();
                                   },
                                   child: Icon(
                                     Icons.skip_previous,
@@ -277,7 +311,19 @@ class SinglePodcast extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(),
-                                Icon(Icons.repeat, color: Colors.white),
+                                Obx(
+                                  () => GestureDetector(
+                                    onTap: () {
+                                      controller.setLoopMode();
+                                    },
+                                    child: Icon(
+                                      Icons.repeat,
+                                      color: controller.isLoopAll.value
+                                          ? Colors.blue
+                                          : Colors.white,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
